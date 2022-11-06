@@ -15,10 +15,10 @@ use App\Mail\EnviarCorreo;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 Route::post('enviar-correo', function () {
-    Mail::to('sistemas@esehospitalguaviare.gov.co')->send(new EnviarCorreo);
-    return "Correo enviado exitosamente";
+    Mail::to(request()->destinatario)->send(new EnviarCorreo(request()->mensaje));
+    return redirect()->route('home')->with('success', 'Correo enviado exitosamente');
 })->name('enviar-correo');
