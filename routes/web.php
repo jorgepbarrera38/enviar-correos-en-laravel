@@ -19,6 +19,6 @@ Route::get('/', function () {
 })->name('home');
 
 Route::post('enviar-correo', function () {
-    Mail::to(request()->destinatario)->send(new EnviarCorreo(request()->mensaje));
+    Mail::to(request()->destinatario)->send(new EnviarCorreo(request()->mensaje, request()->adjunto));
     return redirect()->route('home')->with('success', 'Correo enviado exitosamente');
 })->name('enviar-correo');

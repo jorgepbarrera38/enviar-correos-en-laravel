@@ -10,12 +10,14 @@
     @if (session('success'))
         <li>{{ session('success') }}</li>
     @endif
-    <form action="{{ route('enviar-correo') }}" method="POST">
+    <form action="{{ route('enviar-correo') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="">Destinatario</label>
         <input type="email" name="destinatario" required>
         <label for="">Mensaje</label>
         <textarea name="mensaje" rows="3"></textarea>
+        <label for="">Adjunto</label>
+        <input type="file" name="adjunto" id="">
         <button type="submit">Enviar correo</button>
     </form>
 </body>

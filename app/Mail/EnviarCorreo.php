@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -14,14 +15,16 @@ class EnviarCorreo extends Mailable
     use Queueable, SerializesModels;
 
     public $mensaje;
+    public $adjunto;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mensaje)
+    public function __construct($mensaje, $adjunto)
     {
         $this->mensaje = $mensaje;
+        $this->adjunto = $adjunto;
     }
 
     /**
@@ -55,6 +58,8 @@ class EnviarCorreo extends Mailable
      */
     public function attachments()
     {
-        return [];
+        return [
+            Attachment::fromData(fn () => $this->adjunto->get(), 'Reporte.pdf')->withMime('application/pdf')
+        ];
     }
 }
